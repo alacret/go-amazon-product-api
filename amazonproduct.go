@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 )
 
 /*
@@ -72,6 +74,7 @@ func (api AmazonProductAPI) MultipleItemLookupWithResponseGroup(ItemIds []string
 ItemSearchByKeyword takes a string containing keywords and returns the search results
 */
 func (api AmazonProductAPI) ItemSearchByKeyword(Keywords string, page int) (string, error) {
+	Keywords = replaceSpaces(Keywords)
 	params := map[string]string{
 		"Keywords":      Keywords,
 		"ResponseGroup": "Images,ItemAttributes,Small,EditorialReview",
@@ -81,6 +84,7 @@ func (api AmazonProductAPI) ItemSearchByKeyword(Keywords string, page int) (stri
 }
 
 func (api AmazonProductAPI) ItemSearchByKeywordWithResponseGroup(Keywords string, ResponseGroup string) (string, error) {
+	Keywords = replaceSpaces(Keywords)
 	params := map[string]string{
 		"Keywords":      Keywords,
 		"ResponseGroup": ResponseGroup,
@@ -189,4 +193,16 @@ func (api AmazonProductAPI) BrowseNodeLookupWithResponseGroup(nodeId string, res
 		"ResponseGroup": responseGroup,
 	}
 	return api.genSignAndFetch("BrowseNodeLookup", params)
+}
+
+// Replaces whitespaces with '+'
+func replaceSpaces(keywords string) string{
+	return strings.Map(func(letter rune) rune {
+		if unicode.IsSpace(letter) {
+			rune, _ := utf8.DecodeRuneInString("+")
+			return rune
+		}
+		return letter
+
+	}, keywords)
 }

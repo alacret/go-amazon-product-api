@@ -1,11 +1,9 @@
+# Go Amazon Product API Wrapper
+
+## This library was forked from https://github.com/DDRBoxman/go-amazon-product-api
+
 Simple library to simplify grabbing and posting data from the Amazon Affiliate API
 
-[![Build Status](https://travis-ci.org/DDRBoxman/go-amazon-product-api.svg?branch=master)](https://travis-ci.org/DDRBoxman/go-amazon-product-api)
-[![MIT](http://img.shields.io/badge/license-MIT-green.svg)](LICENSE) [![GODOC](http://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/DDRBoxman/go-amazon-product-api)
-
-
-Have a look at the go docs here:
-http://godoc.org/github.com/DDRBoxman/go-amazon-product-api
 
 Example
 _______
@@ -16,7 +14,7 @@ _______
 		"fmt"
 		"net/http"
 		"encoding/xml"
-		"github.com/DDRBoxman/go-amazon-product-api"
+		"github.com/alacret/go-amazon-product-api"
 	)
 
 	func main() {
@@ -38,9 +36,8 @@ _______
 
 		//Parse result
 		if err == nil {
-			aws := new(amazonproduct.ItemLookupResponse)
+			aws := new(amazonproduct.ItemSearchResponse)
 			xml.Unmarshal([]byte(result), aws)
-			//TODO: Use "aws" freely :-)
 		}
 	}
 
